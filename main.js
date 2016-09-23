@@ -4,7 +4,7 @@ var $title;
 var $resultsBlock;
 var $resultsContent;
 
-$(document).ready(function(){
+$(document).ready(function() {
     $inputBlock = $('#searchInputBlock');
     $form = $inputBlock.find('.js-search-form');
     $title = $form.find('.js-title');
@@ -12,31 +12,32 @@ $(document).ready(function(){
     $resultsBlock = $('#searchResultsBlock');
     $resultsContent = $resultsBlock.find('.js-content');
 
-    $form.on('submit', function(e){
+    $form.on('submit', function(e) {
         getArticles($title.val());
         e.preventDefault();
     });
 });
 
-function getArticles(title){
+function getArticles(title) {
     var url = 'https://en.wikipedia.org/w/api.php?action=query&formatversion=2&generator=prefixsearch' +
         '&gpslimit=10&prop=pageimages|pageterms&piprop=thumbnail&pithumbsize=50&pilimit=10' +
-        '&redirects=&wbptterms=description&format=json&callback=?&gpssearch='+title;
+        '&redirects=&wbptterms=description&format=json&callback=?&gpssearch=' + title;
 
-    $.getJSON(url, function(json){
+    $.getJSON(url, function(json) {
         clearSearchResults();
-        json.query.pages.forEach(function(value){
-            addEntry(value)
+        json.query.pages.forEach(function(value) {
+            addEntry(value);
         });
     });
-
 }
 
-function addEntry(entry){
+function addEntry(entry) {
     var entryContainer = document.createElement('div');
-    entryContainer.classList.add('well');
+    var entryItem;
 
-    var entryItem = document.createElement('div');
+    entryContainer.classList.add('entry-container');
+
+    entryItem = document.createElement('div');
     entryItem.classList.add('row');
 
     addEntryThumbnail(entry, entryItem);
@@ -48,24 +49,28 @@ function addEntry(entry){
 
 function addEntryThumbnail(entry, entryItem) {
     var thumbnailContainer = document.createElement('div');
+    var thumbnail;
+
     thumbnailContainer.classList.add('col-sm-1');
 
-    var thumbnail = getThumbnail(entry.thumbnail);
+    thumbnail = getThumbnail(entry.thumbnail);
     thumbnailContainer.appendChild(thumbnail);
     entryItem.appendChild(thumbnailContainer);
 }
 
 function addEntryTextElements(entry, entryItem) {
     var textElementsContainer = document.createElement('div');
+    var textElements;
+
     textElementsContainer.classList.add('col-sm-11');
 
-    var textElements = [
+    textElements = [
         getTitle(entry.title),
         getDescription(entry.terms),
         getPageLink(entry.pageid)
     ];
 
-    textElements.forEach(function (element) {
+    textElements.forEach(function(element) {
         if (element) {
             textElementsContainer.appendChild(element);
         }
@@ -74,9 +79,9 @@ function addEntryTextElements(entry, entryItem) {
     entryItem.appendChild(textElementsContainer);
 }
 
-function getThumbnail(entryThumbnail){
+function getThumbnail(entryThumbnail) {
     var thumbnail = document.createElement('img');
-    if(entryThumbnail){
+    if (entryThumbnail) {
         thumbnail.src = entryThumbnail.source;
     } else {
         thumbnail.src = 'https://cdn1.iconfinder.com/data/icons/hawcons/32/699055-icon-65-document-image-48.png';
@@ -85,7 +90,7 @@ function getThumbnail(entryThumbnail){
 }
 
 
-function getTitle(entryTitle){
+function getTitle(entryTitle) {
     var title = document.createElement('h4');
     title.classList.add('snippet-title');
     title.innerText = entryTitle;
@@ -93,14 +98,16 @@ function getTitle(entryTitle){
 }
 
 
-function getDescription(entryTerms){
-    if(entryTerms) {
-        var description = document.createElement('p');
+function getDescription(entryTerms) {
+    var description;
+
+    if (entryTerms) {
+        description = document.createElement('p');
         description.innerText = entryTerms.description[0];
         return description;
-    } else {
-        return false;
     }
+
+    return false;
 }
 
 
@@ -109,11 +116,12 @@ function getPageLink(pageId) {
     fullPageLink.href = 'http://en.wikipedia.org/?curid=' + pageId;
     fullPageLink.target = '_blank';
     fullPageLink.innerText = 'Read more...';
+    fullPageLink.classList.add('a-custom');
     return fullPageLink;
 }
 
 
-function clearSearchResults(){
+function clearSearchResults() {
     $resultsContent.empty();
     $title.val('');
 }

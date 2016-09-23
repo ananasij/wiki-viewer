@@ -10,24 +10,24 @@
     <script src="lib/jquery-3.1.0/jquery-3.1.0.min.js"></script>
     <script src="main.js"></script>
 </head>
-<body>
+<body class="body-style">
 <div class="container page-container">
     <div class="container" id="searchInputBlock">
-        <div class="container center-block ">
-            <div class="row">
-                <h2>Browse Wiki here</h2>
-            </div>
-            <div class="row">
-                <div class="well formContainer">
-                    <form action="" class="js-search-form">
-                        <input type="text" class="form-control js-title" placeholder="What do you want to find?" autofocus/>
-                        <button type="submit" role=button class="btn btn-default">Search</button>
-                    </form>
+        <h2 class="text-center form-heading">Wiki browser</h2>
+        <div class="formContainer">
+
+            <form action="" class="js-search-form">
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-custom js-title" placeholder="What do you want to find?" autofocus />
                 </div>
-            </div>
-            <div class="row">
-                <h4>Or read a random article <a href="https://en.wikipedia.org/wiki/Special:Random" target="_blank">right here</a></h4>
-            </div>
+                <div class="form-group">
+                    <button type="submit" role=button class="btn btn-custom">Search</button>
+                </div>
+                <p>
+                    <a href="https://en.wikipedia.org/wiki/Special:Random" target="_blank" class="a-custom">
+                        Or click here to read a random article</a>
+                </p>
+            </form>
         </div>
     </div>
     <div class="container" id="searchResultsBlock">

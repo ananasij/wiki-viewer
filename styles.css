@@ -1,3 +1,65 @@
 * {
     font-family: 'Lato', sans-serif;
 }
+
+.body-style {
+    background-color: #729f98;
+}
+
+.page-container {
+    background-color: #729f98;
+    background-size: 100%;
+}
+
+.container {
+    /*margin: 5px;*/
+}
+
+.page-container {
+    /*padding: 10px;*/
+}
+
+.formContainer,
+.entry-container {
+    margin: 20px;
+    background-color: #f0eceb;
+    padding: 20px;
+    border-radius: 7px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #729f98;
+}
+
+.entry-container:hover {
+    border-color: #aa863a;
+}
+
+.well.formContainer {
+    padding-top: 30px;
+}
+
+.form-heading {
+    margin-bottom: 20px;
+    color: #283018;
+}
+
+.a-custom {
+    color: #aa863a;
+}
+
+.a-custom:active {
+    color: #729f98;
+}
+
+.a-custom:visited {
+    color: #283018;
+}
+
+.btn-custom {
+    background-color: #aa863a;
+    color: #283018;
+}
+
+.form-control-custom:focus {
+    border-color: transparent;
+}
