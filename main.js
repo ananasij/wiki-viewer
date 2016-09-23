@@ -12,7 +12,7 @@ $(document).ready(function(){
     $resultsBlock = $('#searchResultsBlock');
     $resultsContent = $resultsBlock.find('.js-content');
 
-    $('.js-search-form').on('submit', function(e){
+    $form.on('submit', function(e){
         getArticles($title.val());
         e.preventDefault();
     });
@@ -22,9 +22,10 @@ function getArticles(title){
     var url = 'https://en.wikipedia.org/w/api.php?action=query&formatversion=2&generator=prefixsearch' +
         '&gpslimit=10&prop=pageimages|pageterms&piprop=thumbnail&pithumbsize=50&pilimit=10' +
         '&redirects=&wbptterms=description&format=json&callback=?&gpssearch='+title;
+
     $.getJSON(url, function(json){
         clearSearchResults();
-        $.each(json.query.pages,function(index,value){
+        json.query.pages.forEach(function(value){
             addEntry(value)
         });
     });
@@ -32,24 +33,57 @@ function getArticles(title){
 }
 
 function addEntry(entry){
+    var entryContainer = document.createElement('div');
+    entryContainer.classList.add('well');
+
     var entryItem = document.createElement('div');
-    entryItem.classList.add('well');
+    entryItem.classList.add('row');
 
-    entryItem.appendChild(getThumbnail(entry.thumbnail));
-    entryItem.appendChild(getTitle(entry.title));
-    entryItem.appendChild(getDescription(entry.terms));
-    entryItem.appendChild(getPageLink(entry.pageid));
+    addEntryThumbnail(entry, entryItem);
+    addEntryTextElements(entry, entryItem);
 
-    $resultsContent.append(entryItem);
+    entryContainer.appendChild(entryItem);
+    $resultsContent.append(entryContainer);
+}
+
+function addEntryThumbnail(entry, entryItem) {
+    var thumbnailContainer = document.createElement('div');
+    thumbnailContainer.classList.add('col-sm-1');
+
+    var thumbnail = getThumbnail(entry.thumbnail);
+    thumbnailContainer.appendChild(thumbnail);
+    entryItem.appendChild(thumbnailContainer);
+}
+
+function addEntryTextElements(entry, entryItem) {
+    var textElementsContainer = document.createElement('div');
+    textElementsContainer.classList.add('col-sm-11');
+
+    var textElements = [
+        getTitle(entry.title),
+        getDescription(entry.terms),
+        getPageLink(entry.pageid)
+    ];
+
+    textElements.forEach(function (element) {
+        if (element) {
+            textElementsContainer.appendChild(element);
+        }
+    });
+
+    entryItem.appendChild(textElementsContainer);
 }
 
 function getThumbnail(entryThumbnail){
+    var thumbnail = document.createElement('img');
     if(entryThumbnail){
-        var thumbnail = document.createElement('img');
         thumbnail.src = entryThumbnail.source;
-        return thumbnail
+    } else {
+        thumbnail.src = 'https://cdn1.iconfinder.com/data/icons/hawcons/32/699055-icon-65-document-image-48.png';
     }
+    return thumbnail;
 }
+
 
 function getTitle(entryTitle){
     var title = document.createElement('h4');
@@ -58,13 +92,17 @@ function getTitle(entryTitle){
     return title;
 }
 
+
 function getDescription(entryTerms){
     if(entryTerms) {
         var description = document.createElement('p');
         description.innerText = entryTerms.description[0];
         return description;
+    } else {
+        return false;
     }
 }
+
 
 function getPageLink(pageId) {
     var fullPageLink = document.createElement('a');
@@ -73,6 +111,7 @@ function getPageLink(pageId) {
     fullPageLink.innerText = 'Read more...';
     return fullPageLink;
 }
+
 
 function clearSearchResults(){
     $resultsContent.empty();
