@@ -2,27 +2,31 @@
     font-family: 'Lato', sans-serif;
 }
 
+h2 {
+    color: #283018;
+}
+
 .body-style {
-    background-color: #729f98;
+    background-color: #ffffff;
 }
 
 .page-container {
-    background-color: #729f98;
+    background-color: #ffffff;
     background-size: 100%;
 }
 
 .container {
-    /*margin: 5px;*/
+    margin: 5px;
 }
 
 .page-container {
-    /*padding: 10px;*/
+    padding: 10px;
 }
 
 .formContainer,
 .entry-container {
     margin: 20px;
-    background-color: #f0eceb;
+    background-color: #F2EFEE;
     padding: 20px;
     border-radius: 7px;
     border-width: 2px;
@@ -31,7 +35,7 @@
 }
 
 .entry-container:hover {
-    border-color: #aa863a;
+    border-color: #E88000;
 }
 
 .well.formContainer {
@@ -43,20 +47,17 @@
     color: #283018;
 }
 
-.a-custom {
-    color: #aa863a;
+.a-custom,
+.a-custom:visited {
+    color: #E88000;
 }
 
 .a-custom:active {
     color: #729f98;
 }
 
-.a-custom:visited {
-    color: #283018;
-}
-
 .btn-custom {
-    background-color: #aa863a;
+    background-color: #E88000;
     color: #283018;
 }
 
